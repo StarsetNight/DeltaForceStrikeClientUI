@@ -190,8 +190,17 @@ public final class Cs2HudOverlay implements HudElement {
             lastSyncElapsedTicks = -1;
             return;
         }
-        String type = s.channelType() == null ? "" : s.channelType();
+        // 仅自己读条时显示，队友/敌人操作不可见
+        Minecraft mc = Minecraft.getInstance();
+        String selfName = mc.player != null ? mc.player.getGameProfile().name() : "";
         String player = s.channelPlayer() == null ? "" : s.channelPlayer();
+        if (selfName.isEmpty() || !selfName.equals(player)) {
+            localChannel = false;
+            lastSyncElapsedTicks = -1;
+            return;
+        }
+
+        String type = s.channelType() == null ? "" : s.channelType();
         int totalTicks = s.channelTotalTicks() > 0
                 ? s.channelTotalTicks()
                 : ("PLANT".equalsIgnoreCase(type) ? 3 * 20 : 10 * 20);
@@ -208,16 +217,13 @@ public final class Cs2HudOverlay implements HudElement {
             localChannelPlayer = player;
             localChannelTotalTicks = totalTicks;
             lastSyncElapsedTicks = elapsedTicks;
-            // 用服务端已进行 tick 回推开始时刻，消除推送延迟导致的慢 0.3s+
             localChannelStartMs = System.currentTimeMillis() - (elapsedTicks * 50L);
             return;
         }
 
-        // 同一读条期间：用服务端 elapsed 再校准（允许客户端略超前，只在落后时拉齐）
         if (elapsedTicks > lastSyncElapsedTicks) {
             lastSyncElapsedTicks = elapsedTicks;
             long impliedStart = System.currentTimeMillis() - (elapsedTicks * 50L);
-            // 若本地时钟偏慢（进度条落后），向前校正
             if (impliedStart < localChannelStartMs) {
                 localChannelStartMs = impliedStart;
             }
@@ -234,9 +240,7 @@ public final class Cs2HudOverlay implements HudElement {
         float progress = Math.max(0f, Math.min(1f, elapsedMs / (float) totalMs));
 
         boolean plant = "PLANT".equalsIgnoreCase(localChannelType);
-        String label = plant
-                ? "安装炸弹 · " + localChannelPlayer
-                : "拆除炸弹 · " + localChannelPlayer;
+        String label = plant ? "安装炸弹" : "拆除炸弹";
         int edgeColor = plant ? 0xFFFF7A1A : 0xFF4FE3FF;
         int fillColor = plant ? 0xFFE8A33C : 0xFF5B9BD5;
         int bgColor = 0xFF1A1D24;
