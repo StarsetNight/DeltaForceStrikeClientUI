@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "deltaforcestrikeclientui",
+  "version": "${version}",
+  "name": "DeltaForceStrikeClientUI",
+  "description": "CS2-style match HUD for DeltaForceStrike (money, score, teammates, bomb warning)",
+  "authors": ["starset"],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/deltaforcestrikeclientui/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "fabric-datagen": [
+      "org.starset.deltaforcestrikeclientui.client.DeltaforcestrikeclientuiDataGenerator"
+    ],
+    "client": [
+      "org.starset.deltaforcestrikeclientui.client.DeltaforcestrikeclientuiClient"
+    ],
+    "main": [
+      "org.starset.deltaforcestrikeclientui.Deltaforcestrikeclientui"
+    ]
+  },
+  "mixins": [
+    "deltaforcestrikeclientui.mixins.json",
+    {
+      "config": "deltaforcestrikeclientui.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
