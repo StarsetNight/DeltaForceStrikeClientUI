@@ -1,7 +1,3 @@
-好的，以下是为客户端 UI MOD（非强制安装）编写的 **README** 文档，以及对应的 **音乐盒配置文件**（`deltaforcestrikeclientui.json`）。内容参考了服务端插件的风格，但聚焦于客户端增强功能。
-
----
-
 # DeltaForceStrike Client UI
 
 **友谊之约：反制行动 · 客户端增强模块**  

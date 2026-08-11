@@ -10,6 +10,7 @@ import org.starset.deltaforcestrikeclientui.client.config.ClientUiConfig;
 import org.starset.deltaforcestrikeclientui.client.hud.Cs2HudOverlay;
 import org.starset.deltaforcestrikeclientui.client.music.MusicBox;
 import org.starset.deltaforcestrikeclientui.client.network.HudClientNetworking;
+import org.starset.deltaforcestrikeclientui.client.network.TournamentHandshakeClient;
 
 public class DeltaforcestrikeclientuiClient implements ClientModInitializer {
 
@@ -20,6 +21,7 @@ public class DeltaforcestrikeclientuiClient implements ClientModInitializer {
         ClientUiConfig.loadOrCreate();
         HudClientNetworking.init();
         DfscuiCommand.register();
+        TournamentHandshakeClient.init();
 
         HudElementRegistry.attachElementAfter(
                 VanillaHudElements.BOSS_BAR,
