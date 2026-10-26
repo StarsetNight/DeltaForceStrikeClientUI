@@ -66,63 +66,48 @@
 
 ## ⚙️ 配置
 
-配置文件位于 `.minecraft/config/deltaforcestrikeclientui/` 目录下：
-
-- `clientui.json` – HUD 外观、位置、启用开关；
-- `musicbox.json` – 音乐盒事件映射与音量设置（详见下文）。
+配置文件位于 `config/` 目录下：
 
 首次运行 MOD 会自动生成默认配置。
 
-### HUD 配置示例（`clientui.json`）
+### 配置示例（`deltaforcestrikeclientui.json`）
 ```json
 {
-  "masterVolume": 0.3,
+  "masterVolume": 0.7,
+  "hud": {
+    "offset-x": 0,
+    "offset-y": 0,
+    "scale": 1.0
+  },
   "music": {
-    "waiting": {
-      "file": "config/DeltaForceStrikeClient/mainmenu.wav"
-    },
-    "buy-1": {
-      "file": "config/DeltaForceStrikeClient/buy1.wav"
-    },
-    "buy-2": {
-      "file": "config/DeltaForceStrikeClient/buy2.wav"
-    },
-    "buy-3": {
-      "file": "config/DeltaForceStrikeClient/buy3.wav"
-    },
-    "round-start-1": {
-      "file": "config/DeltaForceStrikeClient/start1.wav"
-    },
-    "round-start-2": {
-      "file": "config/DeltaForceStrikeClient/start2.wav"
-    },
-    "round-start-3": {
-      "file": "config/DeltaForceStrikeClient/start3.wav"
-    },
-    "combat-10s": {
-      "file": "config/DeltaForceStrikeClient/10remaining.wav"
-    },
-    "bomb-planted": {
-      "file": "config/DeltaForceStrikeClient/bombplanted.wav"
-    },
-    "bomb-10s": {
-      "file": "config/DeltaForceStrikeClient/10toexplode.wav"
-    },
-    "death": {
-      "file": "config/DeltaForceStrikeClient/dead.wav"
-    },
-    "round-win": {
-      "file": "config/DeltaForceStrikeClient/win.wav"
-    },
-    "round-lose": {
-      "file": "config/DeltaForceStrikeClient/lose.wav"
-    },
-    "match-end": {
-      "file": ""
-    }
+    "waiting":       { "file": "media/mainmenu.wav" },
+    "buy-1":         { "file": "media/buy1.wav" },
+    "buy-2":         { "file": "media/buy2.wav" },
+    "buy-3":         { "file": "media/buy3.wav" },
+    "round-start-1": { "file": "media/start1.wav" },
+    "round-start-2": { "file": "media/start2.wav" },
+    "round-start-3": { "file": "media/start3.wav" },
+    "combat-10s":    { "file": "media/10remaining.wav" },
+    "bomb-planted":  { "file": "media/bombplanted.wav" },
+    "bomb-10s":      { "file": "media/10toexplode.wav" },
+    "death":         { "file": "media/dead.wav" },
+    "round-win":     { "file": "media/win.wav" },
+    "round-lose":    { "file": "media/lose.wav" },
+    "match-end":     { "file": "" }
   }
 }
 ```
+
+> `file` 路径支持绝对路径，或相对 `config/deltaforcestrikeclientui/media|music/` 的相对路径。
+> 每个事件还可以选填 `startSeconds` / `endSeconds` 截取文件中某一段播放（不填则播整个文件）。
+
+---
+
+## 🎵 音乐盒自定义
+
+将 `.ogg` / `.wav` 等音频放入 `config/deltaforcestrikeclientui/media/`（或 `music/`），
+再在 `deltaforcestrikeclientui.json` 中把对应事件的文件名填进去即可。打包分享时
+把 `media` 文件夹与 `deltaforcestrikeclientui.json` 一起复制即可，开箱即用。
 
 ---
 
@@ -134,7 +119,7 @@
 ### 自定义音乐
 1. 准备任意空目录；
 2. 放入 `.ogg` 或 `.wav` 音频文件；
-3. 修改 `musicbox.json` 中对应事件路径文件。
+3. 修改 `deltaforcestrikeclientui.json` 中对应事件路径文件。
 
 ---
 
@@ -142,8 +127,8 @@
 
 | 指令                  | 说明      | 权限        |
 |---------------------|---------|-----------|
-| `/dfscui stopsound` | 强制停止音乐盒 | 无（客户端）  |
-| `/dfsui reload`     | 重载配置文件  | 无（客户端）  |
+| `/dfscui reload`    | 重载配置文件  | 无（客户端）  |
+| `/dfscui stopmusic` | 强制停止音乐盒 | 无（客户端）  |
 
 所有指令均可在聊天栏输入，仅影响本地客户端。
 
